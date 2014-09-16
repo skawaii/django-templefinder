@@ -11,7 +11,7 @@ XPATH_EXP = {'operating': './/span[@id="Operating"]/..',
              'announced': './/span[@id="Announced"]/..',
              'tr_vcard': './/tr[@class="vcard"]',
              'name_link': './/b/span/a',
-             # some of the announced temples don't yet have an <a> tag
+             # some of the announced temples don't yet have an <a> tag for the name
              'name_span': './/b/span',
              'image_page_link': './/a[@class="image"]',
              'image_link': './/div[@class="fullImageLink"]/a',
@@ -64,6 +64,14 @@ def parse_lds(name, parser=etree.HTMLParser()):
 
   # handle non-ascii characters (not allowed in URLs)
   if isinstance(name, unicode): name = replace_diacritics(name)
+
+  # special cases for LDS URLs that don't follow the normal pattern
+  if name == 'provo-city-center': name = 'new-provo-temple-provo-tabernacle'
+  elif name == 'fort-collins-colorado': name = 'fort-collins-colorado-temple'
+  elif name == 'meridian-idaho': name = 'meridian-idaho-temple'
+  elif name == 'winnipeg-manitoba': name = 'winnipeg-manitoba-temple'
+  elif name == 'kinshasa-democratic-republic-of-the-congo': name = 'kinshasa-democratic-republic-of-congo'
+  elif name == 'rio-de-janeiro-brazil': name = 'rio-de-janiero-brazil'
 
   # etree.parse() can't handle the LDS.org URL strings for some reason
   tree = etree.parse(urllib2.urlopen(LDS_URL % name), parser)
