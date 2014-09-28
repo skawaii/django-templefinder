@@ -85,12 +85,13 @@ def parse_lds(name, parser=etree.HTMLParser()):
     #  1 - just the physical address
     #  2 - physical and mailing addresses in separate divs, but telephone is in the same div
     #      as the mailing address. The 3rd div is a notice.
-    #  3 - pyhical address, mailing address, telephone is separate divs
+    #  3 - pyhical address, mailing address, telephone in separate divs
     data['physical_addr'] = None
     data['mailing_addr'] = None
     data['notice'] = None
 
     if len(addr_divs) > 0: data['physical_addr'] = [li.text for li in addr_divs[0].findall(XPATH_EXP['physical_addr'])]
+
     if len(addr_divs) > 1:
       div = addr_divs[1]
       data['mailing_addr'] = [li.text for li in div.findall(XPATH_EXP['mailing_addr'])]
