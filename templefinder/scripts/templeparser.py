@@ -75,10 +75,17 @@ def parse_lds(name, parser=etree.HTMLParser()):
 
   # etree.parse() can't handle the LDS.org URL strings for some reason
   tree = etree.parse(urllib2.urlopen(LDS_URL % name), parser)
-
   data = {}
 
-  # XXX the addr parsing code is starting to get ugly and long. put in its own function
+  data['address'] = parse_lds_address(tree)
+
+  return data
+
+
+def parse_lds_address(tree):
+  '''
+  '''
+  data = {}
   addr_details = tree.find(XPATH_EXP['addr_details'])
 
   # for those special address sections inside a <div id="contact-section"> elem
