@@ -144,11 +144,11 @@ if __name__ == '__main__':
   print 'under construction\n------------------'
   under_construction = []
 
-  for elem in tree.find(xpath_exp['upcoming']).itersiblings():
+  for elem in tree.find(XPATH_EXP['upcoming']).itersiblings():
     if elem.tag == 'h3': break
 
     if elem.tag == 'table':
-      for vcard in elem.xpath(xpath_exp['tr_vcard']):
+      for vcard in elem.xpath(XPATH_EXP['tr_vcard']):
         data = parse_wikipedia(vcard)
         data.update(parse_lds(data['name'])) # parse further data about each temple from lds.org
         print data
