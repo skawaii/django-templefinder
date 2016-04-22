@@ -73,10 +73,17 @@ def parse_lds(name):
   elif name == 'rio-de-janeiro-brazil': name = 'rio-de-janiero-brazil'
 
   tree = html.fromstring(requests.get(LDS_URL % name).text)
-
   data = {}
 
-  # XXX the addr parsing code is starting to get ugly and long. put in its own function
+  data['address'] = parse_lds_address(tree)
+
+  return data
+
+
+def parse_lds_address(tree):
+  '''
+  '''
+  data = {}
   addr_details = tree.find(XPATH_EXP['addr_details'])
 
   # for those special address sections inside a <div id="contact-section"> elem
